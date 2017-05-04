@@ -1,0 +1,266 @@
+SoundCloud.
+Home-page: https://github.com/yetty/django-embed-video
+Author: Juda Kaleta
+Author-email: juda.kaleta@gmail.com
+License: UNKNOWN
+Description: django-embed-video
+        ==================
+        
+        Django app for easy embedding YouTube and Vimeo videos and music from SoundCloud.
+        
+        .. image:: https://travis-ci.org/yetty/django-embed-video.png?branch=master
+            :target: https://travis-ci.org/yetty/django-embed-video
+        .. image:: https://coveralls.io/repos/yetty/django-embed-video/badge.png?branch=master
+            :target: https://coveralls.io/r/yetty/django-embed-video?branch=master
+        .. image:: https://pypip.in/v/django-embed-video/badge.png
+            :target: https://crate.io/packages/django-embed-video/
+        .. image:: https://pypip.in/d/django-embed-video/badge.png
+            :target: https://crate.io/packages/django-embed-video/
+        
+        Documentation
+        *************
+        
+        Documentation is here: http://django-embed-video.rtfd.org/
+        
+        
+        Quick start
+        ************
+        
+        #. Install ``django-embed-video``:
+        
+           ::
+        
+              pip install django-embed-video
+        
+        
+           or from sources
+        
+           ::
+        
+              pip install git+https://github.com/yetty/django-embed-video.git
+        
+        
+        #. Add ``embed_video`` to ``INSTALLED_APPS`` in your Django settings.
+        
+        #. If you want to detect HTTP/S in template tags, you have to set ``request``
+           context processor in ``settings.TEMPLATE_CONTEXT_PROCESSORS``:
+        
+           ::
+        
+               TEMPLATE_CONTEXT_PROCESSORS = (
+                   ...
+                   'django.core.context_processors.request',
+               )
+        
+        #. Usage of template tags:
+        
+           ::
+        
+              {% load embed_video_tags %}
+        
+              The video tag:
+              {% video item.video as my_video %}
+                URL: {{ my_video.url }}
+                Thumbnail: {{ my_video.thumbnail }}
+                Backend: {{ my_video.backend }}
+        
+                {% video my_video "large" %}
+              {% endvideo %}
+        
+              Or embed shortcut:
+              {% video my_video '800x600' %}
+        
+        #. Usage of model fields
+        
+           ::
+        
+              from django.db import models
+              from embed_video.fields import EmbedVideoField
+        
+              class Item(models.Model):
+                  video = EmbedVideoField()  # same like models.URLField()
+        
+        
+        
+        Release 1.1.0 (dev)
+        -------------------
+        
+        *No changes yet.*
+        
+        
+        Release 1.0.0 (May 01, 2015)
+        ----------------------------
+        
+        **Backward incompatible changes:**
+        
+        - filter `embed_video_tags.embed` has been removed
+        
+        - changed behaviour of extra params in video tag
+          (`#34 <https://github.com/yetty/django-embed-video/issues/34>`_, `#36 <https://github.com/yetty/django-embed-video/pull/36>`_)
+        
+        
+        Backward compatible changes:
+        
+        - added support for Django 1.7 and Django 1.8
+        
+        - added support for Vimeo channels
+          (`#47 <https://github.com/yetty/django-embed-video/pull/47>`_)
+        
+        - fix resizing of SoundCloud iframe
+          (`#41 <https://github.com/yetty/django-embed-video/pull/41>`_)
+        
+        
+        Release 0.11 (July 26, 2014)
+        ----------------------------
+        
+        - add support for YouTube mobile urls
+          (`#27 <https://github.com/yetty/django-embed-video/pull/27>`_)
+        
+        - fix passing parameters in calling request library
+          (`#28 <https://github.com/yetty/django-embed-video/pull/28>`_)
+        
+        - fix validation of urls
+          (`#31 <https://github.com/yetty/django-embed-video/issues/31>`_)
+        
+        
+        Release 0.10 (May 24, 2014)
+        ---------------------------
+        
+        - ``video`` tag accepts kwargs
+          (`#20 <https://github.com/yetty/django-embed-video/pull/20>`_)
+        
+        - ``video`` tag will not crash anymore with ``None`` passed as url
+          (`#24 <https://github.com/yetty/django-embed-video/issues/24>`_)
+        
+        
+        Release 0.9 (Apr. 04, 2014)
+        ---------------------------
+        
+        - Add ``VideoBackend.template_name`` and rendering embed code from file.
+        
+        - Allow relative sizes in template tag
+          (`#19 <https://github.com/yetty/django-embed-video/pull/19>`_).
+        
+        - Fix handling invalid urls of SoundCloud.
+          (`#21 <https://github.com/yetty/django-embed-video/issues/21>`_).
+        
+        - Catch ``VideoDoesntExistException`` and ``UnknownBackendException`` in
+          template tags and admin widget.
+        
+        - Add base exception ``EmbedVideoException``.
+        
+        
+        Release 0.8 (Feb. 22, 2014)
+        ---------------------------
+        
+        - Add ``EMBED_VIDEO_TIMEOUT`` to settings.
+        
+        - Fix renderering template tag if no url is provided
+          (`#18 <https://github.com/yetty/django-embed-video/issues/18>`_)
+        
+        - If ``EMBED_VIDEO_TIMEOUT`` timeout is reached in templates, no exception is
+          raised, error is just logged.
+        
+        - Fix default size in template tag.
+          (`See more... <https://github.com/yetty/django-embed-video/commit/6cd3567197d6fdc31bc63fb799815e8368128b90>`_)
+        
+        
+        Release 0.7 (Dec. 21, 2013)
+        ---------------------------
+        
+        - Support for sites running on HTTPS
+        
+        - ``embed`` filter is deprecated and replaced by ``video`` filter.
+        
+        - caching for whole backends was removed and replaced by caching properties
+        
+        - minor improvements on example project (fixtures, urls)
+        
+        
+        Release 0.6 (Oct. 04, 2013)
+        ---------------------------
+        
+        - Ability to overwrite embed code of backend
+        
+        - Caching backends properties
+        
+        - PyPy compatibility
+        
+        - Admin video mixin and video widget
+        
+        
+        Release 0.5 (Sep. 03, 2013)
+        ---------------------------
+        
+        - Added Vimeo thumbnails support
+        
+        - Added caching of results
+        
+        - Added example project
+        
+        - Fixed template tag embed
+        
+        - Fixed raising UnknownIdException in YouTube detecting.
+        
+        
+        
+        Release 0.4 (Aug. 22, 2013)
+        ---------------------------
+        
+        - Documentation was rewrited and moved to http://django-embed-video.rtfd.org/ .
+        
+        - Custom backends
+          (http://django-embed-video.rtfd.org/en/latest/examples.html#custom-backends).
+        
+        - Improved YouTube and Vimeo regex.
+        
+        - Support for Python 3.
+        
+        - Renamed ``base`` to ``backends``.
+        
+        
+        
+        Release 0.3 (Aug. 20, 2013)
+        ---------------------------
+        
+        - Security fix: faked urls are treated as invalid. See `this page
+          <https://github.com/yetty/django-embed-video/commit/d0d357b767e324a7cc21b5035357fdfbc7c8ce8e>`_
+          for more details.
+        
+        - Fixes:
+        
+          - allow of empty video field.
+        
+          - requirements in setup.py
+        
+        - Added simplier way to embed video in one-line template tag::
+        
+            {{ 'http://www.youtube.com/watch?v=guXyvo2FfLs'|embed:'large' }}
+        
+        - ``backend`` variable in ``video`` template tag.
+        
+          Usage::
+        
+            {% video item.video as my_video %}
+                Backend: {{ my_video.backend }}
+            {% endvideo %}
+        
+        
+        Release 0.2 (June 25, 2013)
+        ---------------------------
+        
+        - Support of SoundCloud
+        
+        Release 0.1 (June 1, 2013)
+        --------------------------
+        
+        - Initial release
+        
+Keywords: youtube,vimeo,video,soundcloud
+Platform: UNKNOWN
+Classifier: Framework :: Django
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Internet :: WWW/HTTP
